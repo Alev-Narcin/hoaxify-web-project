@@ -1,4 +1,4 @@
-package com.hoaxify;
+package com.hoaxify.ws;
 
 import  org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

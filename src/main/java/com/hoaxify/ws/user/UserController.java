@@ -18,8 +18,7 @@ public class UserController {
 
     @PostMapping("/api/1.0/users")
     public void createUser(@RequestBody User user) {
-        log.info(user.toString());
 
-
+        userRepository.save(user);
     }
 }

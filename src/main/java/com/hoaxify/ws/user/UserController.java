@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -20,11 +21,15 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/api/1.0/users")
-    @ResponseStatus(HttpStatus.OK)  //response mesajı için istenilen cevap döner.
-    public GenericResponse createUser(@RequestBody User user) {
+    public ResponseEntity<?> createUser(@RequestBody User user) {
         //log.info(user.toString());
-        userService.save(user);
+        String username = user.getUsername();
 
-        return new GenericResponse("user created"); //@AllArgsConstructor eklersek buraya parametre eklemek gerekir.
+        if(username == null || username.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        userService.save(user);
+        return ResponseEntity.ok(new GenericResponse("user created")); //@AllArgsConstructor eklersek buraya parametre eklemek gerekir.
     }
 }

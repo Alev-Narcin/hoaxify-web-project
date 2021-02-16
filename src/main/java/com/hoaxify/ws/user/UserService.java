@@ -2,22 +2,27 @@ package com.hoaxify.ws.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Service
 public class UserService {
 
-    // buraya @Autowired yazarakta injection yapılabilir.
-    UserRepository userRepository;
+    UserRepository userRepository;     // buraya @Autowired yazarakta injection yapılabilir.
+    PasswordEncoder passwordEncoder;
 
     @Autowired //2 türlü injection var. constructor injection yapmak 2. si
     // bir class ta sadece br tane constructor varsa ek olarak @Autowired yazılmasına gerek yok. zaten ilk olarak const. çalışır.
-
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
     public void save(User user) {
+        //user objesini kullanarak gelen password ü encrypt ederiz.
+        String encryptedPassword = this.passwordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
         userRepository.save(user);
     }
 

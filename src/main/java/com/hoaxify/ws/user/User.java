@@ -20,6 +20,7 @@ public class User {
 
     @NotNull
     @Size(min = 4, max = 255)
+    @UniqueUsername
     @Column(unique = true)
     private String username;
 
@@ -31,12 +32,4 @@ public class User {
     @Size(min = 8, max = 255)
     @Pattern(regexp = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}")
     private String password;
-
-    @Override
-    public String toString() {
-        return "User{" + "username='" + username + '\'' +
-                ", displayName='" + displayName + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

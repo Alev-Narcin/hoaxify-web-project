@@ -5,3 +5,14 @@
 #  jpa:
 #    hibernate:
 #      ddl-auto: update
+
+
+#Username validation ı kendimiz yapıyoruz. Ancak hibernate de bunu sonradan yaptığı için
+#NullPointerException atıyor. Bunu önlemek için mode: none yapılıyor.
+spring:
+  jpa:
+    properties:
+      javax:
+        persistence:
+          validation:
+            mode: none

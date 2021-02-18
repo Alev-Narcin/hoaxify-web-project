@@ -20,7 +20,7 @@ public class User {
 
     @NotNull
     @Size(min = 4, max = 255)
-    @UniqueUsername
+    @UniqueUsername    //kendi annotation ımızı oluşturduk.
     @Column(unique = true)
     private String username;
 

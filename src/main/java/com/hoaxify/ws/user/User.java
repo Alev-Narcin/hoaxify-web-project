@@ -2,6 +2,7 @@ package com.hoaxify.ws.user;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,6 +20,7 @@ public class User {
 
     @NotNull
     @Size(min = 4, max = 255)
+    @Column(unique = true)
     private String username;
 
     @NotNull
@@ -26,6 +28,7 @@ public class User {
     private String displayName;
 
     @NotNull
+    @Size(min = 8, max = 255)
     @Pattern(regexp = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}")
     private String password;
 

@@ -1,6 +1,7 @@
 package com.hoaxify.ws.user;
 
 import lombok.Data;
+import org.springframework.context.annotation.PropertySource;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,9 +19,9 @@ public class User {
     @GeneratedValue
     private Long id;
 
-    @NotNull
+    @NotNull(message = "{hoaxify.constraint.username.NotNull.message}")
     @Size(min = 4, max = 255)
-    @UniqueUsername    //kendi annotation ımızı oluşturduk.
+    @UniqueUsername      //kendi annotation ımızı oluşturduk.
     @Column(unique = true)
     private String username;
 
@@ -30,6 +31,6 @@ public class User {
 
     @NotNull
     @Size(min = 8, max = 255)
-    @Pattern(regexp = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}")
+    @Pattern(regexp = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}", message = "{hoaxify.constraint.username.Pattern.message}")
     private String password;
 }

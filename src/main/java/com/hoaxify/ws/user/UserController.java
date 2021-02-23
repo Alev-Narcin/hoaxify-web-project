@@ -23,19 +23,7 @@ public class UserController {
     @PostMapping("/api/1.0/users")
     public GenericResponse createUser(@Valid @RequestBody User user) {
         userService.save(user);
-        return new GenericResponse("user created");         //@AllArgsConstructor eklersek buraya parametre eklemek gerekir.
+        return new GenericResponse("user created");
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiError handleValidationException(MethodArgumentNotValidException exception) {
-        ApiError error = new ApiError(400, "Validation error", "/api/1.0/users");
-        Map<String, String> validationErrors = new HashMap<>();
-
-        for (FieldError fieldError : exception.getBindingResult().getFieldErrors()) {
-            validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
-        }
-        error.setValidationError(validationErrors);
-        return error;
-    }
 }

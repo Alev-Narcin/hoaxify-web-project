@@ -16,7 +16,8 @@ spring:
         persistence:
           validation:
             mode: none
-
+server:
+  port: 8081
 
 #spring security de log seviyesini arttırıyoruz(debug a çekiyoruz).
 #logging:

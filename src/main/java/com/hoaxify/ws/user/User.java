@@ -1,5 +1,7 @@
 package com.hoaxify.ws.user;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.hoaxify.ws.shared.Views;
 import lombok.Data;
 import org.springframework.context.annotation.PropertySource;
 
@@ -19,18 +21,24 @@ public class User {
     @GeneratedValue
     private Long id;
 
+
     @NotNull(message = "{hoaxify.constraint.username.NotNull.message}")
     @Size(min = 4, max = 255)
     @UniqueUsername      //kendi annotation ımızı oluşturduk.
-    @Column(unique = true)
+    @JsonView(Views.class)
     private String username;
 
     @NotNull
     @Size(min = 4, max = 255)
+    @JsonView(Views.class)
     private String displayName;
 
     @NotNull
     @Size(min = 8, max = 255)
     @Pattern(regexp = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}", message = "{hoaxify.constraint.username.Pattern.message}")
+    @JsonView(Views.Sensitive.class)
     private String password;
+
+    @JsonView(Views.class)
+    private String image;
 }

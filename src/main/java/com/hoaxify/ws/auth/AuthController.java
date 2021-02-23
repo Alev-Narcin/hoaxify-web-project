@@ -1,6 +1,8 @@
 package com.hoaxify.ws.auth;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.hoaxify.ws.error.ApiError;
+import com.hoaxify.ws.shared.Views;
 import com.hoaxify.ws.user.User;
 import com.hoaxify.ws.user.UserRepository;
 import org.slf4j.Logger;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class AuthController {
@@ -25,6 +29,7 @@ public class AuthController {
     PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @PostMapping("/api/1.0/auth")
+    @JsonView(Views.Base.class)
     ResponseEntity<?> handleAuthentication(@RequestHeader(name = "Authorization", required = false) String authorization) {    //required = false -> bu header olmasa da sen bizim methodumuza bu request i ulaştır.(header ın opsiyonel olduğunu söylüyoruz.yani oladabilir olmayadabilir) Sonrada içerde kendimiz kontrol ederiz " if " ile.
 
         if(authorization == null) {
@@ -49,7 +54,12 @@ public class AuthController {
             ApiError error = new ApiError(401, "Unauthorized request", "/api/1.0/auth");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
         }
+        //username, displayName, image
+        Map<String, String> responseBody = new HashMap<>();  //(key-value) obje tipi
+        responseBody.put("username", inDB.getUsername());
+        responseBody.put("displayName", inDB.getDisplayName());
+        responseBody.put("image", inDB.getImage());
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(responseBody);  //ok içine direk inDB de koyabiliriz. Ancak görmek istemeklerimize JsonIgnore koymalıyız. böyle oluncada istek attığımızda bad request cevabını almış oluyoruz.
     }
 }

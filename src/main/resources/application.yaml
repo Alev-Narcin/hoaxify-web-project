@@ -17,3 +17,8 @@ spring:
           validation:
             mode: none
 
+
+#spring security de log seviyesini arttırıyoruz(debug a çekiyoruz).
+#logging:
+#  level:
+#    org.springframework: debug

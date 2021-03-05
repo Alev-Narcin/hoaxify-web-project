@@ -5,6 +5,7 @@ import com.hoaxify.ws.error.ApiError;
 import com.hoaxify.ws.shared.GenericResponse;
 import com.hoaxify.ws.shared.Views;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -28,8 +29,8 @@ public class UserController {
     }
 
     @GetMapping("/api/1.0/users")
-    @JsonView(Views.Base.class)  //bu methodu JsonView olarak oluştur anlamında.
-    List<User> getUsers() {
+//    @JsonView(Views.Base.class)  //bu methodu JsonView olarak oluştur anlamında.
+    Page<User> getUsers() {
         return userService.getUsers();
     }
 

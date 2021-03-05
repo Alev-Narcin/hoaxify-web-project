@@ -1,10 +1,11 @@
 package com.hoaxify.ws.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,7 +30,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public Page<User> getUsers() {
+        Pageable page = PageRequest.of(0,5);       //sayfa num. ve her bir sayfada kaç item gelecek gibi tanımlamalar yapabiliyoruz.
+        return userRepository.findAll(page);         //user ları pageable yapıyoruz
     }
 }

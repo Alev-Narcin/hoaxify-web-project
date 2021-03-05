@@ -28,7 +28,7 @@ public class User implements UserDetails {
     @NotNull(message = "{hoaxify.constraint.username.NotNull.message}")
     @Size(min = 4, max = 255)
     @UniqueUsername      //kendi annotation ımızı oluşturduk.
-    @JsonView(Views.Base.class)
+    @JsonView(Views.Base.class) //ethot içerisinde sadece bunu classın kullanıldığı yerleri istediğimizi belirtiyoruz.
     private String username;
 
     @NotNull

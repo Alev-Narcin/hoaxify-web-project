@@ -9,7 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication  //(exclude = SecurityAutoConfiguration.class)   //security eklenmediği zaman kullanılır(en başta kullandık)
+@SpringBootApplication
+//(exclude = SecurityAutoConfiguration.class)   //security eklenmediği zaman kullanılır(en başta kullandık)
 public class WsApplication {
 
     public static void main(String[] args) {
@@ -25,12 +26,14 @@ public class WsApplication {
     @Bean
     CommandLineRunner createInitialUsers(UserService userService) {
         return (args) -> {
+            for(int i=1; i<10; i++) {
+                User user = new User();
+                user.setUsername("user" + i);
+                user.setDisplayName("display" + i);
+                user.setPassword("P4ssword!");
+                userService.save(user);
+            }
 
-            User user = new User();
-            user.setUsername("user1");
-            user.setDisplayName("display1");
-            user.setPassword("P4ssword!");
-            userService.save(user);
         };
     }
 }

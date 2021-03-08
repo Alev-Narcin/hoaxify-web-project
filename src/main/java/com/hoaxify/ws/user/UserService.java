@@ -30,8 +30,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public Page<User> getUsers() {
-        Pageable page = PageRequest.of(0,5);       //sayfa num. ve her bir sayfada kaç item gelecek gibi tanımlamalar yapabiliyoruz.
+    public Page<User> getUsers(Pageable page) {
         return userRepository.findAll(page);         //user ları pageable yapıyoruz
     }
 }

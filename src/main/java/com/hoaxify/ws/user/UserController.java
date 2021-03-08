@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/api/1.0/users")
-//    @JsonView(Views.Base.class)  //bu methodu JsonView olarak oluştur anlamında.
+    @JsonView(Views.Base.class)  //bu methodu JsonView olarak oluştur anlamında.
     Page<User> getUsers(Pageable page ) {
         return userService.getUsers(page);
     }

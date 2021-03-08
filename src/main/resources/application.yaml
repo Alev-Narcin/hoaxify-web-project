@@ -21,6 +21,14 @@ spring:
       pageable:
         default-page-size: 10
         max-page-size: 100
+
+##VIEW anotasyonundaki classlarda sorun çıkarmaması için kullanıldı.
+#  jackson:
+#    mapper:
+#      DEFAULT_VIEW_INCLUSION: true
+
+
+
 server:
   port: 8081
 

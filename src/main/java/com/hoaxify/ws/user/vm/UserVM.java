@@ -8,13 +8,13 @@ public class UserVM {
 
     private String username;
 
-    private String displayname;
+    private String displayName;
 
     private String image;
 
     public UserVM(User user) {
         this.setUsername(user.getUsername());
-        this.setDisplayname(user.getDisplayName());
+        this.setDisplayName(user.getDisplayName());
         this.setImage(user.getImage());
     }
 }

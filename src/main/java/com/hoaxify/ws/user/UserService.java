@@ -1,5 +1,6 @@
 package com.hoaxify.ws.user;
 
+import com.hoaxify.ws.error.NotFoundException;
 import com.hoaxify.ws.user.vm.UserVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,5 +37,13 @@ public class UserService {
             return userRepository.findByUsernameNot(user.getUsername(), page);
         }
         return userRepository.findAll(page);         //user ları pageable yapıyoruz
+    }
+
+    public User getByUsername(String username) {
+        User inDB = userRepository.findByUsername(username);  //db den user ı aldık
+        if(inDB==null) {
+            throw new NotFoundException();
+        }
+        return inDB;
     }
 }

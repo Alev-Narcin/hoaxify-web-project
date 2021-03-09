@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.PARAMETER)  //authantication parametresinde kullanacağımız için
 @Retention(RetentionPolicy.RUNTIME)
 @AuthenticationPrincipal
-public @interface CurrentUser {  //o anki user
+public @interface CurrentUser {     //o an ki user
 
 }

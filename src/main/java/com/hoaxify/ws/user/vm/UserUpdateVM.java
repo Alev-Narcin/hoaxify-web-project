@@ -6,4 +6,6 @@ import lombok.Data;
 public class UserUpdateVM {   //sadece user ı update etmek için kullandığımız bir obje
 
     private String displayName;
+
+    private String image;
 }

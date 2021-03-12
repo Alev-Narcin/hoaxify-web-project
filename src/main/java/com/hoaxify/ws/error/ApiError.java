@@ -1,9 +1,7 @@
 package com.hoaxify.ws.error;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
-
 import java.util.Date;
 import java.util.Map;
 

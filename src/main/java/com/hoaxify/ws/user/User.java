@@ -1,11 +1,9 @@
 package com.hoaxify.ws.user;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -37,7 +35,7 @@ public class User implements UserDetails {
     @Pattern(regexp = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}", message = "{hoaxify.constraint.username.Pattern.message}")
     private String password;
 
-    @Lob     //Large object. image değeri çok büyük olduğu için bunu koymadığımız zaman 500 hatası atıyor.
+    @Lob     //Large object. image değeri çok büyük olduğu için(base64 encoded olduğu için) bunu koymadığımız zaman 500 hatası atıyor.
     private String image;
 
     @Override

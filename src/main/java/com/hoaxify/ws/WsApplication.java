@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 @SpringBootApplication
 //(exclude = SecurityAutoConfiguration.class)   //security eklenmediği zaman kullanılır(en başta kullandık)
@@ -22,6 +23,7 @@ public class WsApplication {
     //Böylece uygulama ayağa kalktıktan sonra (initialize anında) koşabildiğimiz bir komut alanı oluşmuş oluyor.
     //CommendLineRunner bir interface dir.
     @Bean
+    @Profile("dev")  //uygulamanın sadece dev ortamında çalışması için kullanılan annotation.
     CommandLineRunner createInitialUsers(UserService userService) {
         return (args) -> {
             for(int i=1; i<=25; i++) {

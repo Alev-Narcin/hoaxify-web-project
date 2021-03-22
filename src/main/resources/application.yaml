@@ -21,18 +21,20 @@ spring:
       pageable:
         default-page-size: 10
         max-page-size: 100
+  profiles:
+    active: prod
+hoaxify:
+  upload-path: picture-storage
 
-##VIEW anotasyonundaki classlarda sorun çıkarmaması için kullanıldı.
-#  jackson:
-#    mapper:
-#      DEFAULT_VIEW_INCLUSION: true
+---
+spring:
+  profiles: prod
+hoaxify:
+  upload-path: storage-prod
+---
+spring:
+  profiles: dev
+hoaxify:
+  upload-path: storage-dev
+---
 
-
-
-server:
-  port: 8080
-
-#spring security de log seviyesini arttırıyoruz(debug a çekiyoruz).
-#logging:
-#  level:
-#    org.springframework: debug

@@ -37,7 +37,7 @@ public class ErrorHandler implements ErrorController {
             for (FieldError fieldError : fieldErrors) {
                 validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());  //hangi field için hangi message geldi gibi bir mapping yapıyoruz
             }
-            error.setValidationError(validationErrors);
+            error.setValidationErrors(validationErrors);
         }
         return error;
     }

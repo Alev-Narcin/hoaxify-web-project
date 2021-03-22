@@ -40,7 +40,7 @@ public class UserController {
     //controllerda eklediğimiz annotation sayesinde(@EnableGlobalMethodSecurity(prePostEnabled = true)) spring security bu methoda girmeden authorization var mı yok mu ona bakıyor.
     //eğer buna match etmiyorsa client bu method için 403 atıcak.
     @PreAuthorize("#username == principal.username")
-    UserVM updatedUser(@RequestBody UserUpdateVM updatedUser, @PathVariable String username) throws IOException {  //ResponseEntity : hem UserVM hemde ApiError dönebilmemiz için onu bu şekilde sarıyoruz.
+    UserVM updateUser(@Valid @RequestBody UserUpdateVM updatedUser, @PathVariable String username) {  //ResponseEntity : hem UserVM hemde ApiError dönebilmemiz için onu bu şekilde sarıyoruz.
         User user = userService.updateUser(username, updatedUser);
         return new UserVM(user);
     }

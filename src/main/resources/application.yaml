@@ -22,7 +22,7 @@ spring:
         default-page-size: 10
         max-page-size: 100
   profiles:
-    active: prod
+    active: dev
 hoaxify:
   upload-path: picture-storage
 

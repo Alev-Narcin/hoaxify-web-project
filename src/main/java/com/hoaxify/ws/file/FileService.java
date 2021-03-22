@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.UUID;
 
@@ -35,4 +37,15 @@ public class FileService {
         return UUID.randomUUID().toString().replaceAll("-", " ");
     }
 
+    //kullanıcı profilini değiştince eski image silmek için.
+    public void deleteFile(String oldImage) {
+        if(oldImage == null) {
+            return;
+        }
+        try {
+            Files.deleteIfExists(Paths.get(appConfiguration.getUploadPath(), oldImage));  // silinecek image için path i alıyor ve o path üzerinden image ı siliyor.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

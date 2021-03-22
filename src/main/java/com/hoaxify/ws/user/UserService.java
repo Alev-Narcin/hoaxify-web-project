@@ -54,12 +54,14 @@ public class UserService {
         User inDB = getByUsername(username);
         inDB.setDisplayName(userUpdateVM.getDisplayName());
         if (userUpdateVM.getImage() != null) {
+            String oldImage = inDB.getImage();   //eski resmi silmek için
             try {
                 String storedFileName = fileService.writeBase64EncodedStringToFile(userUpdateVM.getImage());
                 inDB.setImage(storedFileName);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            fileService.deleteFile(oldImage);
         }
         return userRepository.save(inDB);
     }

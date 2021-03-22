@@ -1,6 +1,7 @@
 package com.hoaxify.ws.user;
 
 import com.hoaxify.ws.error.NotFoundException;
+import com.hoaxify.ws.file.FileService;
 import com.hoaxify.ws.user.vm.UserUpdateVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,13 +17,14 @@ public class UserService {
 
     UserRepository userRepository;     // buraya @Autowired yazarakta injection yapılabilir.
     PasswordEncoder passwordEncoder;
+    FileService fileService;
 
-    @Autowired
     //2 türlü injection var. constructor injection yapmak 2. si
     //bir class ta sadece br tane constructor varsa ek olarak @Autowired yazılmasına gerek yok. zaten ilk olarak const. çalışır.
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, FileService fileService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.fileService = fileService;
     }
 
     public void save(User user) {
@@ -53,7 +55,7 @@ public class UserService {
         inDB.setDisplayName(userUpdateVM.getDisplayName());
         if (userUpdateVM.getImage() != null) {
             try {
-                String storedFileName = writeBase64EncodedStringToFile(userUpdateVM.getImage());
+                String storedFileName = fileService.writeBase64EncodedStringToFile(userUpdateVM.getImage());
                 inDB.setImage(storedFileName);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -62,16 +64,4 @@ public class UserService {
         return userRepository.save(inDB);
     }
 
-    //profil resmini dosya olarak kaydettik.yukarıdaki method için kullanılan asıl dosya kaydetme-encode etme kısmı.
-    private String writeBase64EncodedStringToFile(String image) throws IOException {
-        String fileName = "profile.png";
-        File target = new File("picture-storage/" + fileName);
-        OutputStream outputStream = new FileOutputStream(target);
-
-        byte[] base64Encoded = Base64.getDecoder().decode(image);
-
-        outputStream.write(base64Encoded);
-        outputStream.close();
-        return fileName;
-    }
 }

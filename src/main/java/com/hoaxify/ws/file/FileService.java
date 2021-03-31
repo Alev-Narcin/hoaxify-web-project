@@ -1,8 +1,10 @@
 package com.hoaxify.ws.file;
 
 import com.hoaxify.ws.configuration.AppConfiguration;
+import org.apache.tika.Tika;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -20,13 +22,19 @@ public class FileService {
     @Autowired
     AppConfiguration appConfiguration;
 
+    private static final Logger log = LoggerFactory.getLogger(FileService.class);
+
     //profil resmini dosya olarak kaydettik.yukarıdaki method için kullanılan asıl dosya kaydetme-encode etme kısmı.
     public String writeBase64EncodedStringToFile(String image) throws IOException {
+        Tika tika = new Tika();  //tika gönderdiğimiz dosya tipini detect(tespit etme) edebilme özelliğine sahip.
         String fileName = generateRandomName();
         File target = new File(appConfiguration.getUploadPath() + "/" + fileName);
         OutputStream outputStream = new FileOutputStream(target);
 
         byte[] base64Encoded = Base64.getDecoder().decode(image);
+
+        String fileType = tika.detect(base64Encoded);
+        log.info(fileType);
 
         outputStream.write(base64Encoded);
         outputStream.close();
@@ -39,7 +47,7 @@ public class FileService {
 
     //kullanıcı profilini değiştince eski image silmek için.
     public void deleteFile(String oldImage) {
-        if(oldImage == null) {
+        if (oldImage == null) {
             return;
         }
         try {

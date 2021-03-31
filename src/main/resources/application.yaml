@@ -26,6 +26,8 @@ spring:
 hoaxify:
   upload-path: picture-storage
 
+server:
+  port: 8081
 ---
 spring:
   profiles: prod

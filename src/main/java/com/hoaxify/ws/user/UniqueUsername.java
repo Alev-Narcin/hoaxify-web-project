@@ -4,7 +4,7 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
-@Target( {ElementType.FIELD} )  //Annotation ı nerede kullanıcağımızı belirtiyoruz.
+@Target({ElementType.FIELD})  //Annotation ı nerede kullanıcağımızı belirtiyoruz.
 @Retention(RetentionPolicy.RUNTIME) //Annotation ın runtime da çözümlenmesiyle ilgili bir davranış.
 @Constraint(   //bu const. kullanıldığı yerlerde uygulanacak olan validation logic inin ilgili clasını soruyor.
         validatedBy = {UniqueUsernameValidator.class}

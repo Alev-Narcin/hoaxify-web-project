@@ -18,25 +18,26 @@ import java.util.UUID;
 
 @Service
 public class FileService {
-
-    @Autowired
     AppConfiguration appConfiguration;
 
-    private static final Logger log = LoggerFactory.getLogger(FileService.class);
+    Tika tika;  //tika gönderdiğimiz dosya tipini detect(tespit etme) edebilme özelliğine sahip.
 
-    //profil resmini dosya olarak kaydettik.yukarıdaki method için kullanılan asıl dosya kaydetme-encode etme kısmı.
-    public String writeBase64EncodedStringToFile(String image) throws IOException {
-        Tika tika = new Tika();  //tika gönderdiğimiz dosya tipini detect(tespit etme) edebilme özelliğine sahip.
+    public FileService(AppConfiguration appConfiguration) {
+        super();
+        this.appConfiguration = appConfiguration;
+        this.tika = new Tika();
+    }
+
+    //private static final Logger log = LoggerFactory.getLogger(FileService.class);
+
+    public String writeBase64EncodedStringToFile(String image) throws IOException {  //profil resmini dosya olarak kaydettik.yukarıdaki method için kullanılan asıl dosya kaydetme-encode etme kısmı.
         String fileName = generateRandomName();
         File target = new File(appConfiguration.getUploadPath() + "/" + fileName);
         OutputStream outputStream = new FileOutputStream(target);
 
-        byte[] base64Encoded = Base64.getDecoder().decode(image);
+        byte[] base64encoded = Base64.getDecoder().decode(image);
 
-        String fileType = tika.detect(base64Encoded);
-        log.info(fileType);
-
-        outputStream.write(base64Encoded);
+        outputStream.write(base64encoded);
         outputStream.close();
         return fileName;
     }
@@ -55,5 +56,10 @@ public class FileService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String detectType(String value) {
+        byte[] base64encoded = Base64.getDecoder().decode(value);
+        return tika.detect(base64encoded);
     }
 }
